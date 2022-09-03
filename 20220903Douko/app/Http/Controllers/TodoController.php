@@ -29,10 +29,11 @@ class TodoController extends Controller
         Todo::create($create);
         return redirect('./');
     }
-
+    
     public function create(TodoRequest $request)
     {
         $create = $request->all();
+        dd($create);
         Todo::create($create);
         return redirect('./');
     }

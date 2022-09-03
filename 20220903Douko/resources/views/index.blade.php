@@ -93,8 +93,12 @@
 <a href="/search">タスク検索</a></br>
 <form action="/add" method="POST">
   @csrf
-  <input type="hidden" name="user_id->{{$user->id}}">
-  <input class="create input-text" type="text" method="POST" multiple name="task" >
+  @isset($user)
+  <input type="hidden" name="user_id" value="{{$user->id}}">
+  @else
+  'ログインしてください'
+  @endif
+  <input class="create input-text" type="text" method="POST" name="task" >
     <input class="button button__create" type="submit" value="追加">
 </form>
 
