@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TodoRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Todo;
 use App\Models\Tag;
 use App\Models\User;
@@ -13,10 +14,20 @@ use App\Models\User;
 class TodoController extends Controller
 {
 
-    public function index(TodoRequest $todo)
+    public function index()
     {
-        $todos = Todo::find(user->user_id);
-        return view('index',['todos'=> $todos]);
+        $todos = Todo::all();
+        $user = Auth::user();
+        $param = ['todos' => $todos, 'user' =>$user];
+        
+        return view('index',$param);
+    }
+
+    public function logout(TodoRequest $request)
+    {
+        $create = $request->all();
+        Todo::create($create);
+        return redirect('./');
     }
 
     public function create(TodoRequest $request)

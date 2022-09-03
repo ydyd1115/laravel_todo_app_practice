@@ -81,7 +81,7 @@
 </style>
 
 
-@section('title', 'タスク検索')
+@section('title', 'Todo List')
 @section('content')
 @if (count($errors) > 0)
 <ul>
@@ -93,13 +93,9 @@
 <a href="/search">タスク検索</a></br>
 <form action="/add" method="POST">
   @csrf
-  <input class="create input-text" type="text" method="POST" name="task">
-  <select class="button button__tag">
-    @foreach($tags as $tag)
-    {{$tag->tag}}
-    @endforeach
-  </select>
-  <input class="button button__create" type="submit" value="追加">
+  <input type="hidden" name="$user->id">
+  <input class="create input-text" type="text" method="POST" multiple name="task" >
+    <input class="button button__create" type="submit" value="追加">
 </form>
 
   <table class=content__table>

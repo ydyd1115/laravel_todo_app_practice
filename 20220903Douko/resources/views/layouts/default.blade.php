@@ -6,10 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@yield('title')</title>
   <style>
+
+    *{
+      border:solid 1px red;
+    
+    }
+
     body{
       background-color:#2d0089;
     }
-    
+
+    .index{
+      display:flex;
+      justify-content:space-between;
+      
+    }
+
+    .index__user__li{
+      list-style:none;
+      display:flex;
+      justify-content:flex-end;
+    }
+
     .content{
       background-color:#ffffff;
       margin:10% auto;
@@ -27,18 +45,24 @@
 </head>
   <body>
     <div class="content">
-      <h2>@yield('title')</h2>
-      @if($user == null)
-      <a href="/login">ログインしてください</a>
-      @else
-      <p>{{$user->name}}でログイン中</p>
-      <a href="/logout">ログアウト</a>
-      @endif
-      <div>
-        @yield('content')
-
+      <div class="index">
+        <h2 class="index__title"> @yield('title')</h2>
+        <div class="index__user">
+        @if (Auth::check())
+          <ul class="index__user__li">
+            <li>「{{$user->name}}でログイン中</li>
+            <li><a href="/logout">ログアウト</a></li>
+          </ul>
+          @else
+          <p>ログインしてください。（<a href="/login">ログイン</a>｜
+            <a href="/register">登録</a>）</p>
+          @endif
+        </div>    
       </div>
-    @yield('content__table')
+      <div>
+          @yield('content')
+      </div>
+      @yi eld('content__table')
     </div>
-</body>
+  </body>
 </html>

@@ -25,7 +25,8 @@ class TodoRequest extends FormRequest
     {
         return [
             'task' => 'required|string|max:20',
-            'tag_id' => 'required'
         ];
+
+        
     }
 }

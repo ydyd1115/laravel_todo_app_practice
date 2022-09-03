@@ -12,13 +12,9 @@ class Todo extends Model
     protected $fillable = ['task'];
 
 
-
-
     public function user(){
         return $this->hasOne('App\Models\User');
     }
 
-    public function tag(){
-        return $this->hasone('App\Models\Tag');     
-    }
+
 }
