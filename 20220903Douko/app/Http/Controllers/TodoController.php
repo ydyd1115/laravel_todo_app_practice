@@ -72,9 +72,9 @@ class TodoController extends Controller
     public function result(TodoRequest $request){
         $result = $request->all();
         $user = Auth::user();
-        // dd($result);
         $tags = Tag::all();
         $param = ['todos' => $result, 'user' =>$user,'tags' => $tags];
+        // dd($param);
 
         return view('search',$param);      
     }

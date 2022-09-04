@@ -122,7 +122,6 @@
         削除
       </th>
     </tr>
-    @isset($param)
       @foreach($todos as $task)
         <tr>
           <td class="content__table-data  datetime">
@@ -152,7 +151,7 @@
           </form>
         </tr>
       @endforeach
-      @endisset
+
   </table>
 <a href="/">戻る</a>
   @endsection
