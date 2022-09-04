@@ -24,6 +24,10 @@
   width:35%;
 }
 
+.content__table-tag{
+  margin:0 0 0 20%;
+}
+
 .datetime{
   text-align:center;
 }
@@ -158,7 +162,7 @@
         <input class="update-task  input-text" type="text"  name="task" value="{{$task -> task}}">
       </td>
       <td>
-        <select name="tag_id" id="tag_id">
+        <select class="content__table-tag" name="tag_id" id="tag_id">
           <option value="selected"> {{$task->getTitle()}}</option>
           (@foreach($tags as $tag)
           <option value="{{$tag->id}}">{{$tag->tag}}</option>

@@ -7,24 +7,29 @@
   <link rel="stylesheet" href="resouces/css/reset.css" />
   <title>@yield('title')</title>
   <style>
-/* 
+
     *{
       border:solid 1px red;
     
-    } */
+    }
 
     body{
       background-color:#2d0089;
     }
 
     select{
+      display:inline-block;
       height:30px;
-      border:0px;
       font-size:15px;
+      margin: 0 auto;
+      text-align: center;
+      border:0px;
+    }
+    
+    option{
+      display:inline-block;
     }
 
-    option{
-    }
 
     .index{
       display:flex;
