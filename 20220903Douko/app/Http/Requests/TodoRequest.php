@@ -26,7 +26,11 @@ class TodoRequest extends FormRequest
         return [
             'task' => 'required|string|max:20',
         ];
-
-        
+    }
+                public function messages()
+    {
+        return [
+            'task.required' => 'タスク名を入力してください',
+    ];
     }
 }

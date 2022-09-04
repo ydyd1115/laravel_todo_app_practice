@@ -8,10 +8,10 @@
   <title>@yield('title')</title>
   <style>
 
-    *{
+    /* *{
       border:solid 1px red;
     
-    }
+    } */
 
     body{
       background-color:#2d0089;
@@ -51,6 +51,20 @@
       width:55%;
     }
 
+    .button__logout{
+  color:red;
+  border:solid 2px red;
+  font-size:12px;
+  padding:3px;
+  margin-left:5px;
+  text-decoration: none;
+}
+
+  .button__logout:hover {
+    color         : #ffffff;
+    background    : red;
+  }
+
     table th{
       font-weight:5px;
       }
@@ -63,10 +77,10 @@
       <div class="index">
         <h2 class="index__title"> @yield('title')</h2>
         <div class="index__user">
-        @isset($user)
+        @if (Auth::check())
           <ul class="index__user__li">
             <li>「{{$user->name}}でログイン中</li>
-            <li><a href="/logout">ログアウト</a></li>
+            <li><a class="button button__logout"href="/logout">ログアウト</a></li>
           </ul>
           @else
           <p>ログインしてください。（<a href="/login">ログイン</a>｜

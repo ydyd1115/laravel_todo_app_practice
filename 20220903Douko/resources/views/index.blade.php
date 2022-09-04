@@ -12,6 +12,7 @@
   font-size:15px;
   border:solid 1px #aaaaaa;
   border-radius:5px;
+  width:80%;
   padding:8px;
 }
 
@@ -65,7 +66,6 @@
   word-break: normal;
   margin:8px 0px;
   padding:3px;
-
 }
 .button__search:hover {
   color         : #ffffff;
@@ -163,9 +163,12 @@
       </td>
       <td>
         <select class="content__table-tag" name="tag_id" id="tag_id">
-          <option value="selected"> {{$task->getTitle()}}</option>
-          (@foreach($tags as $tag)
-          <option value="{{$tag->id}}">{{$tag->tag}}</option>
+          @foreach($tags as $tag)
+            @if($tag->tag === $task->getTitle())
+              <option value="{{$tag->id}}" selected >{{$tag->tag}}</option>
+            @else
+              <option value="{{$tag->id}}">{{$tag->tag}}</option>
+            @endif
           @endforeach
         </select>
       </td>

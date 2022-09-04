@@ -65,19 +65,18 @@ class TodoController extends Controller
     public function search(Request $request){
         $user = Auth::user();
         $tags = Tag::all();
-        $result = Todo::where('user_id',Auth::user()->id)->get();
-        $param = ['todos' =>$result, 'user' =>$user,'tags' => $tags];
+        $param = [ 'user' =>$user,'tags' => $tags];
+        // dd($param);
         return view('search',$param);
     }
-    public function result(TodoRequest $request){
-        $result = $request->all();
+    public function result(Request $request){
         $user = Auth::user();
         $tags = Tag::all();
-        $param = ['todos' => $result, 'user' =>$user,'tags' => $tags];
-        // dd($param);
-
+        dd($request->tag_id);
+        $param = ['result' =>$result, 'user' =>$user,'tags' => $tags];
         return view('search',$param);      
     }
+    
 
 
 }

@@ -13,6 +13,7 @@
   border:solid 1px #aaaaaa;
   border-radius:5px;
   padding:8px;
+  width:80%;
 }
 
 
@@ -70,7 +71,7 @@
 
 .button__delete{
   color:#90e0ee;;
-  border:solid 2px #90e0ee;;
+  border:solid 2px #90e0ee;
 }
 
 .button__delete:hover {
@@ -78,31 +79,39 @@
   background    : #90e0ee;
 }
 
+.button__back{
+  display:inline-block;
+  color:gray;
+  border:solid 2px gray;
+  height:20px;
+  padding:3px 15px ;
+  text-decoration: none;
+}
+.button__back:hover {
+  color:#ffffff;;
+  background    : gray;
+}
+
 </style>
 
 
-@section('title', 'Todo List')
+@section('title', 'タスク検索')
 @section('content')
 
-@if (count($errors) > 0)
-<ul>
-  @foreach ($errors->all() as $error)
-  <li>{{$error}}</li>
-  @endforeach
-</ul>
-@endif
+
 <form action="/search" method="POST">
   @csrf
   <input type="hidden" method="POST" name="user_id" value="{{$user->id}}">
   <input class="create input-text" type="text" method="POST" name="task" >
   <select name="tag_id" id="tag_id">
+    <option value=""></option>
     (@foreach($tags as $tag)
     <option value="{{$tag->id}}">{{$tag->tag}}</option>
     @endforeach
   </select>
-
     <input class="button button__create" type="submit" value="検索">
 </form>
+
 
   <table class=content__table>
     <tr>
@@ -121,8 +130,9 @@
       <th>
         削除
       </th>
+    @isset($result)  
     </tr>
-      @foreach($todos as $task)
+    @foreach($result as $task)
         <tr>
           <td class="content__table-data  datetime">
             @isset($task -> updated_at)
@@ -137,7 +147,15 @@
             <input class="update-task  input-text" type="text"  name="task" value="{{$task -> task}}">
           </td>
           <td>
-            {{$task->getTitle()}}
+            <select class="content__table-tag" name="tag_id" id="tag_id">
+              @foreach($tags as $tag)
+                @if($tag->tag === $task->getTitle())
+                  <option value="{{$tag->id}}" selected >{{$tag->tag}}</option>
+                @else
+                  <option value="{{$tag->id}}">{{$tag->tag}}</option>
+                @endif
+              @endforeach
+            </select>
           </td>
           <td class="button-box">
             <input class="button button__update" type="submit" value="更新">
@@ -151,8 +169,8 @@
           </form>
         </tr>
       @endforeach
-
-  </table>
-<a href="/">戻る</a>
-  @endsection
+    </table>
+    @endisset
+    <a href="/" class="button button__back">戻る</a>
+    @endsection
 

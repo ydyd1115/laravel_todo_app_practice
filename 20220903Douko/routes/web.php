@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +27,11 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 
-Route::get('/',[TodoController::class, 'index']);
+Route::get('/',[TodoController::class, 'index'])->middleware('auth');
 Route::post('/add',[TodoController::class, 'create']);
 Route::post('/update',[TodoController::class, 'update']);
 Route::post('/delete',[TodoController::class, 'delete']);
-Route::get('/logout',[TodoController::class, 'logout']);
+Route::get('/logout', [LoginController::class,'loggedOut']);
 
 
 
