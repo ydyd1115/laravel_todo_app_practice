@@ -21,7 +21,7 @@
 }
 
 .content__table-data{
-  width:40%;
+  width:35%;
 }
 
 .datetime{
@@ -46,6 +46,26 @@
   background:white;
   transition    : .3s;
   word-break: normal;
+}
+
+.button__search{
+  display:inline-block;
+  color:#ffd700;
+  height:25px;
+  font-size:15px;
+  font-weight:600;
+  border:solid 2px #ffd700;
+  border-radius:5px;
+  text-decoration: none;
+  transition    : .3s;
+  word-break: normal;
+  margin:8px 0px;
+  padding:3px;
+
+}
+.button__search:hover {
+  color         : #ffffff;
+  background    : #ffd700;
 }
 
 .button__create{
@@ -83,6 +103,7 @@
 
 @section('title', 'Todo List')
 @section('content')
+
 @if (count($errors) > 0)
 <ul>
   @foreach ($errors->all() as $error)
@@ -90,15 +111,17 @@
   @endforeach
 </ul>
 @endif
-<a href="/search">タスク検索</a></br>
+<a href="/search" class="button__search">タスク検索</a></br>
 <form action="/add" method="POST">
   @csrf
-  @isset($user)
-  <input type="hidden" name="user_id" value="{{$user->id}}">
-  @else
-  'ログインしてください'
-  @endif
+  <input type="hidden" method="POST" name="user_id" value="{{$user->id}}">
   <input class="create input-text" type="text" method="POST" name="task" >
+  <select name="tag_id" id="tag_id">
+    (@foreach($tags as $tag)
+    <option value="{{$tag->id}}">{{$tag->tag}}</option>
+    @endforeach
+  </select>
+
     <input class="button button__create" type="submit" value="追加">
 </form>
 
@@ -109,6 +132,9 @@
       </th>
       <th class="content__table-data">
         タスク名
+      </th>
+      <th>
+        タグ
       </th>
       <th>
         更新
@@ -125,11 +151,19 @@
         @else
       {{$task -> created_at}}
       @endisset
-    </td>
-    <form action="/update/?id={{ $task->id }}" method="POST">
+      </td>
+      <form action="/update/?id={{ $task->id }}" method="POST">
       @csrf 
       <td class="content__table-data">
         <input class="update-task  input-text" type="text"  name="task" value="{{$task -> task}}">
+      </td>
+      <td>
+        <select name="tag_id" id="tag_id">
+          <option value="selected"> {{$task->getTitle()}}</option>
+          (@foreach($tags as $tag)
+          <option value="{{$tag->id}}">{{$tag->tag}}</option>
+          @endforeach
+        </select>
       </td>
       <td class="button-box">
         <input class="button button__update" type="submit" value="更新">

@@ -4,16 +4,26 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="resouces/css/reset.css" />
   <title>@yield('title')</title>
   <style>
-
+/* 
     *{
       border:solid 1px red;
     
-    }
+    } */
 
     body{
       background-color:#2d0089;
+    }
+
+    select{
+      height:30px;
+      border:0px;
+      font-size:15px;
+    }
+
+    option{
     }
 
     .index{
@@ -48,7 +58,7 @@
       <div class="index">
         <h2 class="index__title"> @yield('title')</h2>
         <div class="index__user">
-        @if (Auth::check())
+        @isset($user)
           <ul class="index__user__li">
             <li>「{{$user->name}}でログイン中</li>
             <li><a href="/logout">ログアウト</a></li>
@@ -62,7 +72,6 @@
       <div>
           @yield('content')
       </div>
-      @yi eld('content__table')
     </div>
   </body>
 </html>

@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
+
 Route::get('/',[TodoController::class, 'index']);
 Route::post('/add',[TodoController::class, 'create']);
 Route::post('/update',[TodoController::class, 'update']);

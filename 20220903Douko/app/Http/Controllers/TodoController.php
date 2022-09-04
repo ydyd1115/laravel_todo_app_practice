@@ -14,26 +14,35 @@ use App\Models\User;
 class TodoController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $todos = Todo::all();
         $user = Auth::user();
-        $param = ['todos' => $todos, 'user' =>$user];
-        
+        $tags = Tag::all();
+        $todos = Todo::where('user_id',Auth::user()->id)->get();
+        $param = ['todos' => $todos, 'user' =>$user,'tags' => $tags];
+        // dd($param);
         return view('index',$param);
     }
 
+    // public function find(TodoRequest $request)
+    // {
+    //     $todos = Todo::find($request->user_id);
+    //     $user = Auth::user();
+    //     $tags = Tag::all();
+    //     $param = ['todos' => $todos, 'user' =>$user,'tags' => $tags];
+        
+    //     return view('find',$param);
+    // }
+
     public function logout(TodoRequest $request)
     {
-        $create = $request->all();
-        Todo::create($create);
         return redirect('./');
     }
     
     public function create(TodoRequest $request)
     {
         $create = $request->all();
-        dd($create);
+        // dd($create);
         Todo::create($create);
         return redirect('./');
     }
@@ -52,12 +61,22 @@ class TodoController extends Controller
         Todo::find($request->id)->delete();
         return redirect('./');
     }
-
+    
     public function search(Request $request){
-
+        $user = Auth::user();
+        $tags = Tag::all();
+        $result = Todo::where('user_id',Auth::user()->id)->get();
+        $param = ['todos' =>$result, 'user' =>$user,'tags' => $tags];
+        return view('search',$param);
     }
-    public function result(Request $request){
+    public function result(TodoRequest $request){
+        $result = $request->all();
+        $user = Auth::user();
+        // dd($result);
+        $tags = Tag::all();
+        $param = ['todos' => $result, 'user' =>$user,'tags' => $tags];
 
+        return view('search',$param);      
     }
 
 

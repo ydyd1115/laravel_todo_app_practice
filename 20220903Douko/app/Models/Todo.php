@@ -9,12 +9,19 @@ class Todo extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['task'];
+    protected $fillable = ['task','user_id','tag_id'];
 
 
     public function user(){
-        return $this->hasOne('App\Models\User');
+        return $this->belongs('App\Models\User');
     }
 
+    public function getTitle(){//修正
+        return optional($this->tag)->tag;
+    }
+
+    public function tag(){
+        return $this->belongsTo('App\Models\Tag');
+    }
 
 }

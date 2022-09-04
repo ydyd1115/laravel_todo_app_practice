@@ -21,7 +21,7 @@
 }
 
 .content__table-data{
-  width:40%;
+  width:35%;
 }
 
 .datetime{
@@ -83,6 +83,7 @@
 
 @section('title', 'Todo List')
 @section('content')
+
 @if (count($errors) > 0)
 <ul>
   @foreach ($errors->all() as $error)
@@ -92,57 +93,67 @@
 @endif
 <form action="/search" method="POST">
   @csrf
-  <input class="create input-text" type="text" method="POST" name="task">
-  <select class="button button__tag" name="tag">
-    @foreach($tags as $tag)
-    {{$tag->tag}}
+  <input type="hidden" method="POST" name="user_id" value="{{$user->id}}">
+  <input class="create input-text" type="text" method="POST" name="task" >
+  <select name="tag_id" id="tag_id">
+    (@foreach($tags as $tag)
+    <option value="{{$tag->id}}">{{$tag->tag}}</option>
     @endforeach
   </select>
-  <input class="button button__create" type="submit" value="検索">
+
+    <input class="button button__create" type="submit" value="検索">
 </form>
 
-<table class=content__table>
-  <tr>
-    <th class="content__table-data">
-      作成日
-    </th>
-    <th class="content__table-data">
-      タスク名
-    </th>
-    <th>
-      更新
-    </th>
-    <th>
-      削除
-    </th>
-  </tr>
-    @foreach($todos as $task)
+  <table class=content__table>
     <tr>
-      <td class="content__table-data  datetime">
-        @isset($task -> updated_at)
-        {{$task -> updated_at}}
-        @else
-        {{$task -> created_at}}
-        @endisset
-      </td>
-      <form action="/update/?id={{ $task->id }}" method="POST">
-        @csrf 
-        <td class="content__table-data">
-          <input class="update-task  input-text" type="text"  name="task" value="{{$task -> task}}">
-        </td>
-        <td class="button-box">
-          <input class="button button__update" type="submit" value="更新">
-        </td>
-      </form>
-      <form action="/delete/?id={{ $task->id }}" method="POST">
-        @csrf 
-        <td class="button-box">
-          <input class="button button__delete" type="submit" value="削除">
-        </td>
-      </form>
+      <th class="content__table-data">
+        作成日
+      </th>
+      <th class="content__table-data">
+        タスク名
+      </th>
+      <th>
+        タグ
+      </th>
+      <th>
+        更新
+      </th>
+      <th>
+        削除
+      </th>
     </tr>
+    @isset($param)
+      @foreach($todos as $task)
+        <tr>
+          <td class="content__table-data  datetime">
+            @isset($task -> updated_at)
+            {{$task -> updated_at}}
+            @else
+          {{$task -> created_at}}
+          @endisset
+          </td>
+          <form action="/update/?id={{ $task->id }}" method="POST">
+            @csrf 
+          <td class="content__table-data">
+            <input class="update-task  input-text" type="text"  name="task" value="{{$task -> task}}">
+          </td>
+          <td>
+            {{$task->getTitle()}}
+          </td>
+          <td class="button-box">
+            <input class="button button__update" type="submit" value="更新">
+          </td>
+          </form>
+          <form action="/delete/?id={{ $task->id }}" method="POST">
+          @csrf 
+          <td class="button-box">
+            <input class="button button__delete" type="submit" value="削除">
+          </td>
+          </form>
+        </tr>
+      @endforeach
+      @endisset
   </table>
-    @endforeach
-    <a href="/">戻る</a>
+<a href="/">戻る</a>
   @endsection
 

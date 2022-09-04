@@ -9,4 +9,8 @@ class Tag extends Model
 {
     use HasFactory;
     protected $fillable = ['tag'];
+
+    public function array(){
+        [$this->id,$this->tag_id];
+}
 }
