@@ -14,7 +14,7 @@ use App\Models\User;
 class TodoController extends Controller
 {
 
-    public function index(Request $request)
+    public function index()
     {
         $user = Auth::user();
         $tags = Tag::all();
@@ -24,15 +24,6 @@ class TodoController extends Controller
         return view('index',$param);
     }
 
-    // public function find(TodoRequest $request)
-    // {
-    //     $todos = Todo::find($request->user_id);
-    //     $user = Auth::user();
-    //     $tags = Tag::all();
-    //     $param = ['todos' => $todos, 'user' =>$user,'tags' => $tags];
-        
-    //     return view('find',$param);
-    // }
 
     public function logout(TodoRequest $request)
     {
@@ -52,9 +43,7 @@ class TodoController extends Controller
         $update = $request->all();
         unset($update['_token']);
         Todo::find($request->id)->update($update);
-        // Todo::where('id', $request->id)->update($update);
         return redirect('./');
-        // echo $request->task0.$update->id;
     }
     public function delete(Request $request)
     {
@@ -66,13 +55,30 @@ class TodoController extends Controller
         $user = Auth::user();
         $tags = Tag::all();
         $param = [ 'user' =>$user,'tags' => $tags];
-        // dd($param);
         return view('search',$param);
     }
+    
     public function result(Request $request){
         $user = Auth::user();
         $tags = Tag::all();
-        dd($request->tag_id);
+        if($request->task != null){
+            if($request->tag_id != null){
+                $result = Todo::where('user_id',Auth::user()->id)->get()
+                ->where('task','LIKE BINARY',"%{$request->task}%")
+                ->where('tag_id',$request->tag_id);
+            }else{
+                $result = Todo::where('user_id',Auth::user()->id)->get()
+                ->where('task',$request->task);
+            }
+        }else{
+            if($request->tag_id != null){
+            $result = Todo::where('user_id',Auth::user()->id)->get()
+            ->where('tag_id',$request->tag_id);
+            }else{
+            $result = Todo::where('user_id',Auth::user()->id)->get();
+            }
+        }
+
         $param = ['result' =>$result, 'user' =>$user,'tags' => $tags];
         return view('search',$param);      
     }

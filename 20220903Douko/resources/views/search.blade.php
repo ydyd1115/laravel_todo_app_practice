@@ -101,7 +101,6 @@
 
 <form action="/search" method="POST">
   @csrf
-  <input type="hidden" method="POST" name="user_id" value="{{$user->id}}">
   <input class="create input-text" type="text" method="POST" name="task" >
   <select name="tag_id" id="tag_id">
     <option value=""></option>
